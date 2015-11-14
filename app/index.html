@@ -1,0 +1,82 @@
+<!doctype html>
+<html ng-app="contactApp">
+<head>
+    <link href="vendor/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="vendor/animatecss/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="js/main.js"></script>
+
+</head>
+<body class="" ng-controller="contactListController as contactList">
+<header>
+    <h2><a class="btn btn-primary pull-right"  ng-click="contactList.newContact()">NEW CONTACT</a>Contact Manager</h2>
+</header>
+<div >
+
+    <ul class="list-unstyled" class="row">
+        <li ng-repeat="contact in contactList.contacts" class="contact col-lg-4 col-sm-6">
+            <div class="contact-box">
+                <div class="avatar-container col-sm-4">
+                    <img class="img-responsive" ng-src="{{contact.avatar}}">
+                </div>
+                <div class="edit-controls">
+                    <a ng-click="contactList.edit(contact)"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a ng-click="contactList.delete(contact)" class="delete-contract"><span class="glyphicon glyphicon-trash"></span></a>
+                </div>
+                <div class="col-sm-8">
+                    <h3>
+                        {{contact.name}}
+                        <span>
+                            <a ng-click="contactList.edit(contact)" href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a ng-click="contactList.delete(contact)" href="#" class="delete-contract"><span class="glyphicon glyphicon-trash"></span></a>
+                        </span>
+                    </h3>
+                    <h4>Email</h4>
+                    <span>{{contact.email}}</span>
+                    <h4>Tel:</h4>
+                    <span>{{contact.tel}}</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <div class="fixed-container row" ng-show="contactList.inEdit" >
+        <div id="formContainer" class="animated slideInDown">
+            <div class="col-lg-2">
+                <img src="{{contactList.inEdit.avatar}}">
+            </div>
+            <form role="form" class="form-horizontal contract-form col-lg-10" ng-submit="contactList.saveContact()">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Full name:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control contact-name-input" ng-model="contactList.inEdit.name" placeholder="Insert name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Email address:</label>
+                    <div class="col-sm-6">
+                        <input type="email" class="form-control contact-name-input" ng-model="contactList.inEdit.email" placeholder="Insert email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Telephone number:</label>
+                    <div class="col-sm-6">
+                        <input type="tel" class="form-control contact-name-input" ng-model="contactList.inEdit.tel" placeholder="Insert tel">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-3">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
+                    </div>
+                    <div class="col-sm-3">
+                        <a ng-click="contactList.cancelEdit()" class="btn btn-default btn-lg btn-block">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
