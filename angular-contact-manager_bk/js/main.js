@@ -1,8 +1,17 @@
 /**
  * Created by davidesozzi on 14/11/15.
  */
-angular.module('contactApp', [])
+var dependencies = [];
+if (typeof APP_TEST !== "undefined")
+    dependencies.push("ngMock");
+
+var contactApp = angular.module('contactApp', dependencies)
     .controller('contactListController', ['$scope', function($scope) {
+
+        /**
+         * The contact list. Ideally they are fetched from a service
+         * @type {*[]}
+         */
         $scope.contacts = [
             {
                 id: 1,
@@ -49,30 +58,36 @@ angular.module('contactApp', [])
         ];
 
         /**
-         *
+         * The bridge between the controller and the view. When this object is declared, the
+         * edit/new form appear. It allows us to determine when in editing mode
          * @type {null}
          */
         $scope.inEdit = null;
 
+
         /**
-         *
+         * When creating a new contact we use this Boolean to keep track it
          * @type {boolean}
          */
         $scope.isNewContact = false;
 
+
         /**
-         *
+         * Current editing contact index.
+         * //TODO use the index for a confirmation message upon delete
          * @type {null}
          */
         $scope.currentContactIdx = null;
 
+
         /**
-         *
+         * Function called when filled the form correctly and creating a new contact.
+         * We assign a new id and an avatar. Ideally the avatar should be decided upon creation.
          */
         $scope.saveNewContact = function() {
             var obj = {
                 id: $scope.contacts.length,
-                avatar: 'img/faces/6.jpg'
+                avatar: $scope.getAvatar()
             };
             $scope.contacts.push(
                 angular.extend({}, obj,$scope.getContactFormFields())
@@ -81,18 +96,20 @@ angular.module('contactApp', [])
             $scope.inEdit = null;
         };
 
+
         /**
-         *
-         * @param contact
+         * Function which deletes the contact from the list
+         * @param contact {Object} contact in the contact list
          */
         $scope.delete = function(contact){
             var idx = $scope.contacts.indexOf(contact);
             $scope.contacts.splice(idx,1);
         };
 
+
         /**
-         *
-         * @param contact
+         * Function called when clicked the edit button in the contact
+         * @param contact {Object} contact in the contact list
          */
         $scope.edit = function(contact){
             $scope.currentContactIdx = $scope.contacts.indexOf(contact);
@@ -100,8 +117,9 @@ angular.module('contactApp', [])
 
         };
 
+
         /**
-         *
+         * Function which reset the app status
          */
         $scope.cancelEdit = function(){
             $scope.inEdit = null;
@@ -110,7 +128,7 @@ angular.module('contactApp', [])
         };
 
         /**
-         *
+         * When clicked the New Contact button we prepare the app status
          */
         $scope.newContact = function(){
             $scope.isNewContact = true;
@@ -121,28 +139,32 @@ angular.module('contactApp', [])
             };
         };
 
+
         /**
-         *
+         * Function called when confirming the form submission. We evaluate if it's a new contact or
+         * a simple edit.
          */
         $scope.saveContact = function(){
             if($scope.isNewContact){
                 $scope.saveNewContact();
             } else {
-                $scope.updateContent();
+                $scope.updateContact();
             }
             $scope.cancelEdit();
         };
 
+
         /**
-         *
+         * Update the contact
          */
-        $scope.updateContent = function(){
+        $scope.updateContact = function(){
             var contact = $scope.contacts[$scope.currentContactIdx];
             angular.extend(contact,$scope.getContactFormFields())
         };
 
+
         /**
-         *
+         * Utility to get the form values
          * @returns {{name: null, tel: null, email: null}}
          */
         $scope.getContactFormFields = function(){
@@ -152,4 +174,16 @@ angular.module('contactApp', [])
                 email: $scope.inEdit.email
             }
         }
+
+        
+        /**
+         * Utility to get the avatar path
+         * @returns {string} The image path
+         */
+        $scope.getAvatar = function(){
+
+            var num =  Math.floor(Math.random()*(15-1+1)+1);
+            return 'img/faces/'+ num +'.jpg'
+        }
+
     }]);
