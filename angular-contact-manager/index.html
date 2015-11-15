@@ -8,28 +8,28 @@
     <script src="js/main.js"></script>
 
 </head>
-<body class="" ng-controller="contactListController as contactList">
+<body class="" ng-controller="contactListController">
 <header>
-    <h2><a class="btn btn-primary pull-right"  ng-click="contactList.newContact()">NEW CONTACT</a>Contact Manager</h2>
+    <h2><a class="btn btn-primary pull-right"  ng-click="newContact()">NEW CONTACT</a>Contact Manager</h2>
 </header>
 <div >
 
     <ul class="list-unstyled" class="row">
-        <li ng-repeat="contact in contactList.contacts" class="contact col-lg-4 col-sm-6">
+        <li ng-repeat="contact in contacts" class="contact col-lg-4 col-sm-6">
             <div class="contact-box">
                 <div class="avatar-container col-sm-4">
                     <img class="img-responsive" ng-src="{{contact.avatar}}">
                 </div>
                 <div class="edit-controls">
-                    <a ng-click="contactList.edit(contact)"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a ng-click="contactList.delete(contact)" class="delete-contract"><span class="glyphicon glyphicon-trash"></span></a>
+                    <a ng-click="edit(contact)"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a ng-click="delete(contact)" class="delete-contract"><span class="glyphicon glyphicon-trash"></span></a>
                 </div>
                 <div class="col-sm-8">
                     <h3>
                         {{contact.name}}
                         <span>
-                            <a ng-click="contactList.edit(contact)" href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a ng-click="contactList.delete(contact)" href="#" class="delete-contract"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a ng-click="edit(contact)" href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a ng-click="delete(contact)" href="#" class="delete-contract"><span class="glyphicon glyphicon-trash"></span></a>
                         </span>
                     </h3>
                     <h4>Email</h4>
@@ -41,28 +41,28 @@
         </li>
     </ul>
 
-    <div class="fixed-container row" ng-show="contactList.inEdit" >
+    <div class="fixed-container row" ng-show="inEdit" >
         <div id="formContainer" class="animated slideInDown">
             <div class="col-lg-2">
-                <img src="{{contactList.inEdit.avatar}}">
+                <img src="{{inEdit.avatar}}">
             </div>
-            <form role="form" class="form-horizontal contract-form col-lg-10" ng-submit="contactList.saveContact()">
+            <form role="form" class="form-horizontal contract-form col-lg-10" ng-submit="saveContact()">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Full name:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control contact-name-input" ng-model="contactList.inEdit.name" placeholder="Insert name">
+                        <input type="text" class="form-control contact-name-input" ng-model="inEdit.name" placeholder="Insert name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Email address:</label>
                     <div class="col-sm-6">
-                        <input type="email" class="form-control contact-name-input" ng-model="contactList.inEdit.email" placeholder="Insert email">
+                        <input type="email" class="form-control contact-name-input" ng-model="inEdit.email" placeholder="Insert email">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Telephone number:</label>
                     <div class="col-sm-6">
-                        <input type="tel" class="form-control contact-name-input" ng-model="contactList.inEdit.tel" placeholder="Insert tel">
+                        <input type="tel" class="form-control contact-name-input" ng-model="inEdit.tel" placeholder="Insert tel">
                     </div>
                 </div>
                 <div class="form-group">
@@ -70,7 +70,7 @@
                         <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
                     </div>
                     <div class="col-sm-3">
-                        <a ng-click="contactList.cancelEdit()" class="btn btn-default btn-lg btn-block">Cancel</a>
+                        <a ng-click="cancelEdit()" class="btn btn-default btn-lg btn-block">Cancel</a>
                     </div>
                 </div>
             </form>

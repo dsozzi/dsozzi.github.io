@@ -2,9 +2,8 @@
  * Created by davidesozzi on 14/11/15.
  */
 angular.module('contactApp', [])
-    .controller('contactListController', function() {
-        var contactList = this;
-        contactList.contacts = [
+    .controller('contactListController', ['$scope', function($scope) {
+        $scope.contacts = [
             {
                 id: 1,
                 name : 'Terrence S. Hatfield',
@@ -53,68 +52,69 @@ angular.module('contactApp', [])
          *
          * @type {null}
          */
-        contactList.inEdit = null;
+        $scope.inEdit = null;
 
         /**
          *
          * @type {boolean}
          */
-        contactList.isNewContact = false;
+        $scope.isNewContact = false;
 
         /**
          *
          * @type {null}
          */
-        contactList.currentContactIdx = null;
+        $scope.currentContactIdx = null;
 
         /**
          *
          */
-        contactList.addContact = function() {
+        $scope.saveNewContact = function() {
             var obj = {
-                id: this.contacts.length,
+                id: $scope.contacts.length,
                 avatar: 'img/faces/6.jpg'
             };
-            contactList.contacts.push(
-                angular.extend({}, obj,this.getContactFormFields())
+            $scope.contacts.push(
+                angular.extend({}, obj,$scope.getContactFormFields())
             );
 
-            contactList.inEdit = null;
+            $scope.inEdit = null;
         };
 
         /**
          *
          * @param contact
          */
-        contactList.delete = function(contact){
-            var idx = this.contacts.indexOf(contact);
-            this.contacts.splice(idx,1);
+        $scope.delete = function(contact){
+            var idx = $scope.contacts.indexOf(contact);
+            $scope.contacts.splice(idx,1);
         };
 
         /**
          *
          * @param contact
          */
-        contactList.edit = function(contact){
-            this.currentContactIdx = this.contacts.indexOf(contact);
-            this.inEdit = angular.copy(contact);;
+        $scope.edit = function(contact){
+            $scope.currentContactIdx = $scope.contacts.indexOf(contact);
+            $scope.inEdit = angular.copy(contact);
+
         };
 
         /**
          *
          */
-        contactList.cancelEdit = function(){
-            this.inEdit = null;
-            this.isNewContact = false;
-            this.currentContactIdx = null;
+        $scope.cancelEdit = function(){
+            $scope.inEdit = null;
+            $scope.isNewContact = false;
+            $scope.currentContactIdx = null;
         };
 
         /**
          *
          */
-        contactList.newContact = function(){
-            this.isNewContact = true;
-            this.inEdit = {
+        $scope.newContact = function(){
+            $scope.isNewContact = true;
+            $scope.inEdit = {
                 name : null,
                 tel: null,
                 email: null
@@ -124,32 +124,32 @@ angular.module('contactApp', [])
         /**
          *
          */
-        contactList.saveContact = function(){
-            if(this.isNewContact){
-                this.addContact();
+        $scope.saveContact = function(){
+            if($scope.isNewContact){
+                $scope.saveNewContact();
             } else {
-                this.updateContent();
+                $scope.updateContent();
             }
-            this.cancelEdit();
+            $scope.cancelEdit();
         };
 
         /**
          *
          */
-        contactList.updateContent = function(){
-            var contact = this.contacts[this.currentContactIdx];
-            angular.extend(contact,this.getContactFormFields())
+        $scope.updateContent = function(){
+            var contact = $scope.contacts[$scope.currentContactIdx];
+            angular.extend(contact,$scope.getContactFormFields())
         };
 
         /**
          *
          * @returns {{name: null, tel: null, email: null}}
          */
-        contactList.getContactFormFields = function(){
+        $scope.getContactFormFields = function(){
             return {
-                name : contactList.inEdit.name,
-                tel: contactList.inEdit.tel,
-                email: contactList.inEdit.email
+                name : $scope.inEdit.name,
+                tel: $scope.inEdit.tel,
+                email: $scope.inEdit.email
             }
         }
-    });
+    }]);
