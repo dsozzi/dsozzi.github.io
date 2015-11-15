@@ -42,7 +42,7 @@
         </li>
     </ul>
 
-    <div class="fixed-container row" ng-show="inEdit" >
+    <div class="fixed-container row" ng-show="inEdit">
         <div id="formContainer" class="animated slideInDown">
             <div class="col-lg-2">
                 <img src="{{inEdit.avatar}}">
@@ -51,19 +51,19 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Full name:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control contact-name-input" ng-model="inEdit.name" placeholder="Insert name">
+                        <input required type="text" class="form-control contact-name-input" ng-model="inEdit.name" placeholder="Insert name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Email address:</label>
                     <div class="col-sm-6">
-                        <input type="email" class="form-control contact-name-input" ng-model="inEdit.email" placeholder="Insert email">
+                        <input required type="email" class="form-control contact-name-input" ng-model="inEdit.email" placeholder="Insert email">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Telephone number:</label>
                     <div class="col-sm-6">
-                        <input type="tel" class="form-control contact-name-input" ng-model="inEdit.tel" placeholder="Insert tel">
+                        <input required type="tel" class="form-control contact-name-input" ng-model="inEdit.tel" placeholder="Insert tel">
                     </div>
                 </div>
                 <div class="form-group">
